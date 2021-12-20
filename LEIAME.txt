@@ -1,0 +1,69 @@
+********************************************************
+AVA: cursos.alura.com.br
+Formação: PHP
+Curso: PHP Composer: Dependências, Autoload e Publicação
+Data Início: 15/12/2021
+********************************************************
+
+Capítulo 01: Instalando o Composer
+#composerInit, #composerLibrary, #vendorName
+
+1. Verificamos que temos instalado o composer versão "2.0.8 2020-12-03 17:20:38":
+      >composer --version
+2. Inicializamos um novo repositório do Composer:
+      >composer init 
+
+Capítulo 02: Gerenciando dependências
+
+1. Instalamos 2 dependências:
+      >composer require guzzlehttp/guzzle
+      >composer require symfony/dom-crawler
+   A primeira é um client HTTP, e a segunda um analisador de documentos HTML (DOM);
+   Isso gera um arquivo chamado "composer.lock" que lista todas as dependências, necessárias por cada
+   pacote. 
+   A instrução "require" realiza 3 operções: adiciona a declaração da dependência, atualiza o arquivo
+   "composer.lock" e baixa os fontes na correspondentes em "vendor".
+   Caso editemos o arquivo "composer.json" manualmente, precisamos executar a instrução "update";
+2. Criamos um script php que carrega os requisitos, cria os objetos, trás o html, percorre o html filtrado
+   por uma tag span de classe CSS específica:
+      @see buscar-cursos.php
+3. Refatoramos o script buscar-cursos.php para usar uma nova classe criada em:
+      @see src\Buscador.php
+
+Capítulo 03: Entendendo o Autoload
+
+1. Configuramos o arquivo "composer.json" para realizar o Autoload dos fontes do nosso projeto
+   que segue o padrão PSR-4 de namespaces / diretorios. Em seguida, executamos o dump Autoload:
+      >composer dump-autoload
+   Basta adicionar na chave "psr-4" filha da chave "autoload" a chave contendo "nosso vendor namespace" 
+   e o valor contendo nosso "diretorio base": @see composer.json
+2. Configuramos o arquivo "composer.json" para realizar o Autoload de Classes e de Funções que 
+   não seguem o padrão PSR-4:
+      @see composer.json
+
+Capítulo 04: Ferramentas de qualidade de código
+
+1. Instalamos a dependência de DESENVOLVIMENTO "PHPUnit":
+      >composer require --dev phpunit/phpunit
+   Além de instalar todas as dependências que a PHPUnit necessita, o composer disponibiliza também 
+   uma executável para executar a funcionalidade da Ferramenta. Normalmente este executável está 
+   na pasta vendor/bin/<ferramenta>:
+      >.\vendor/bin/phpunit --version
+2. Instalamos a dependência de DESENVOLVIMENTO "CodeSniffer":
+      >composer require --dev squizlabs/php_codesniffer
+   A qual disponibiliza um executável "vendor/bin/phpcs"
+      >.\vendor\bin\phpcs --version
+      >.\vendor\bin\phpcs --standard=PSR12 src\
+3. Instalamos a dependência de DESENVOLVIMENTO "phan":
+      >composer require --dev phan/phan
+   A qual disponibiliza um executável "vendor/bin/phan":
+      >.\vendor\bin\phan --allow-polyfill-parser src\Buscador.php
+
+Capítulo 05: Automatizando processos com Scripts
+
+1. Acrescentamos no @see composer.json 2 scripts;
+2. Acrescentamos no @see composer.json 1 script que chama os 2 scripts simultaneamente;
+
+Capítulo 06: Publicando um pacote
+
+1. 
